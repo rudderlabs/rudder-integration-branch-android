@@ -23,7 +23,7 @@ repositories {
 ```
 3. Add the dependency under ```dependencies```
 ```
-implementation 'com.rudderlabs.android.sdk:rudder-sdk-core:0.1.0'
+implementation 'com.rudderlabs.android.sdk:rudder-sdk-core:0.1.5'
 implementation 'com.rudderlabs.android.integration.branch:rudder-integration-branch-android:0.1.0'
 ```
 
