@@ -17,7 +17,7 @@ Released under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 ```
 repositories {
   maven {
-    url  "https://dl.bintray.com/rudderlabs-bintray/rudder-sdk-android-core"
+    jcenter()
   }
 }
 ```
