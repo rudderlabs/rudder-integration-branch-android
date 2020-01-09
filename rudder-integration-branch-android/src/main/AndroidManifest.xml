@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.rudderlabs.android.integration.adjust">
+    package="com.rudderlabs.android.integration.branch">
     <application>
         <receiver
             android:name="io.branch.referral.InstallListener"

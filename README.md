@@ -1,4 +1,4 @@
-[ ![Download](https://api.bintray.com/packages/rudderlabs-bintray/rudder-sdk-android-core/rudder-integration-adjust-android/images/download.svg?version=0.1.0) ](https://bintray.com/rudderlabs-bintray/rudder-sdk-android-core/rudder-integration-adjust-android/0.1.0/link)
+[ ![Download](https://api.bintray.com/packages/rudderlabs-bintray/rudder-sdk-android-core/rudder-integration-branch-android/images/download.svg?version=0.1.0) ](https://bintray.com/rudderlabs-bintray/rudder-sdk-android-core/rudder-integration-branch-android/0.1.0/link)
 
 # What is Rudder?
 
@@ -10,8 +10,8 @@ Rudder is a platform for collecting, storing and routing customer event data to 
 
 Released under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 
-## Getting Started with Adjust Integration of Android SDK
-1. Add [Adjust](https://www.adjust.com) as a destination in the [Dashboard](https://app.rudderlabs.com/) and define ```apiToken``` and ```eventMapping```
+## Getting Started with BranchIO Integration of Android SDK
+1. Add [BranchIO](https://branch.io) as a destination in the [Dashboard](https://app.rudderlabs.com/) and define ```apiToken``` and ```eventMapping```
 
 2. Add these lines to your ```app/build.gradle```
 ```
@@ -24,7 +24,7 @@ repositories {
 3. Add the dependency under ```dependencies```
 ```
 implementation 'com.rudderlabs.android.sdk:rudder-sdk-core:0.1.0'
-implementation 'com.rudderlabs.android.integration.adjust:rudder-integration-adjust-android:0.1.0'
+implementation 'com.rudderlabs.android.integration.branch:rudder-integration-branch-android:0.1.0'
 ```
 
 ## Initialize ```RudderClient```
@@ -35,7 +35,7 @@ val rudderClient: RudderClient = RudderClient.getInstance(
     RudderConfig.Builder()
         .withEndPointUri(END_POINT_URI)
         .withLogLevel(RudderLogger.RudderLogLevel.DEBUG)
-        .withFactory(AdjustIntegrationFactory.FACTORY)
+        .withFactory(BranchIntegrationFactory.FACTORY)
         .build()
 )
 ```

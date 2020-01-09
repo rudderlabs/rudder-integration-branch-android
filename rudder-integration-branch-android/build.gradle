@@ -34,8 +34,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 
     // rudder core sdk
-//    compileOnly 'com.rudderlabs.android.sdk:rudder-sdk-core:0.1.4'
-    compileOnly project(':rudder-sdk-core')
+    compileOnly 'com.rudderlabs.android.sdk:rudder-sdk-core:0.1.5'
+    implementation 'com.google.code.gson:gson:2.8.6'
 
     // branch sdk and other requirements
     implementation 'io.branch.sdk.android:library:4.2.1'

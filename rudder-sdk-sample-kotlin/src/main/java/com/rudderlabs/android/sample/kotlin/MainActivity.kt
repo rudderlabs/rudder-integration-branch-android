@@ -5,12 +5,8 @@ import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.rudderlabs.android.sdk.core.RudderMessageBuilder
 import com.rudderlabs.android.sdk.core.TrackPropertyBuilder
-import com.rudderlabs.android.sdk.core.ecomm.ECommerceCart
-import com.rudderlabs.android.sdk.core.ecomm.ECommerceProduct
-import com.rudderlabs.android.sdk.core.ecomm.ECommerceWishList
-import com.rudderlabs.android.sdk.core.ecomm.events.CartViewedEvent
-import com.rudderlabs.android.sdk.core.ecomm.events.ProductAddedToCartEvent
-import com.rudderlabs.android.sdk.core.ecomm.events.ProductAddedToWishListEvent
+import com.rudderlabs.android.sdk.core.ecomm.*
+import com.rudderlabs.android.sdk.core.ecomm.events.*
 
 class MainActivity : AppCompatActivity() {
     private var count = 0
@@ -60,6 +56,31 @@ class MainActivity : AppCompatActivity() {
             .withProduct(productC)
             .build()
 
+        // ECommerce Order
+        val order = ECommerceOrder.Builder()
+            .withOrderId("some_order_id")
+            .withAffiliation("some_order_affiliation")
+            .withCoupon("some_coupon")
+            .withCurrency("USD")
+            .withDiscount(1.49f)
+            .withProducts(productA, productB, productC)
+            .withRevenue(10.99f)
+            .withShippingCost(2.49f)
+            .withTax(1.49f)
+            .withTotal(12.99f)
+            .withValue(10.49f)
+            .build()
+
+
+        // ECommerce Checkout event
+        val checkout = ECommerceCheckout.Builder()
+            .withCheckoutId("some_checkout_id")
+            .withOrderId("some_order_id")
+            .withPaymentMethod("Visa")
+            .withShippingMethod("FedEx")
+            .withStep(1)
+            .build()
+
         val productAddedToCartEvent = ProductAddedToCartEvent()
             .withCartId("some_cart_id")
             .withProduct(productA)
@@ -81,5 +102,68 @@ class MainActivity : AppCompatActivity() {
 
         val cartViewedEvent = CartViewedEvent().withCart(cart)
         MainApplication.rudderClient.track(cartViewedEvent.event(), cartViewedEvent.build())
+
+        val checkoutStartedEvent = CheckoutStartedEvent().withOrder(order)
+        MainApplication.rudderClient.track(
+            checkoutStartedEvent.event(),
+            checkoutStartedEvent.build()
+        )
+
+        val paymentInfoEnteredEvent = PaymentInfoEnteredEvent()
+            .withCheckout(checkout)
+        MainApplication.rudderClient.track(
+            paymentInfoEnteredEvent.event(),
+            paymentInfoEnteredEvent.build()
+        )
+
+        val orderCompletedEvent = OrderCompletedEvent().withOrder(order)
+        MainApplication.rudderClient.track(
+            orderCompletedEvent.event(),
+            orderCompletedEvent.build()
+        )
+
+        val spendCreditEvent = OrderCompletedEvent().withOrder(order)
+        MainApplication.rudderClient.track(
+            "Spend Credits",
+            spendCreditEvent.build()
+        )
+
+        val productSearchedEvent = ProductSearchedEvent().withQuery("blue hot pants")
+        MainApplication.rudderClient.track(
+            productSearchedEvent.event(),
+            productSearchedEvent.build()
+        )
+
+        val productViewedEvent = ProductViewedEvent()
+            .withProduct(productA);
+        MainApplication.rudderClient.track(productViewedEvent.event(), productViewedEvent.build())
+
+        val productListViewedEvent = ProductListViewedEvent()
+            .withProducts(productA, productB, productC)
+        MainApplication.rudderClient.track(
+            productListViewedEvent.event(),
+            productListViewedEvent.build()
+        )
+
+        val productReviewedEvent = ProductReviewedEvent()
+            .withProduct(productA)
+            .withRating(2.0)
+            .withReviewBody("Some Review Body")
+            .withReviewId("some_review_id")
+        MainApplication.rudderClient.track(
+            productReviewedEvent.event(),
+            productReviewedEvent.build()
+        )
+
+        val productSharedEvent = ProductSharedEvent()
+            .withProduct(productA)
+            .withRecipient("friend@gmail.com")
+            .withShareMessage("Some Share Message")
+            .withSocialChannel("Gmail")
+        MainApplication.rudderClient.track(
+            productSharedEvent.event(),
+            productSharedEvent.build()
+        )
+
     }
 }
