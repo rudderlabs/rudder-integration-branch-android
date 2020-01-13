@@ -1,5 +1,5 @@
 ext {
-    bintrayRepo = 'rudder-sdk-android-core'
+    bintrayRepo = 'rudderstack'
     bintrayName = 'rudder-integration-branch-android'
 
     publishedGroupId = 'com.rudderlabs.android.integration.branch'
@@ -13,7 +13,7 @@ ext {
 
     libraryVersion = '0.1.0'
 
-    developerId = 'arnabp-rudder'
+    developerId = 'arnabp92'
     developerName = 'Arnab Pal'
     developerEmail = 'arnab@rudderlabs.com'
 

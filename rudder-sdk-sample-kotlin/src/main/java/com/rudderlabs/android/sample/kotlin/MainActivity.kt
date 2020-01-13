@@ -71,7 +71,6 @@ class MainActivity : AppCompatActivity() {
             .withValue(10.49f)
             .build()
 
-
         // ECommerce Checkout event
         val checkout = ECommerceCheckout.Builder()
             .withCheckoutId("some_checkout_id")
@@ -80,6 +79,8 @@ class MainActivity : AppCompatActivity() {
             .withShippingMethod("FedEx")
             .withStep(1)
             .build()
+
+        MainApplication.rudderClient.identify("some_user_id")
 
         val productAddedToCartEvent = ProductAddedToCartEvent()
             .withCartId("some_cart_id")
@@ -102,6 +103,8 @@ class MainActivity : AppCompatActivity() {
 
         val cartViewedEvent = CartViewedEvent().withCart(cart)
         MainApplication.rudderClient.track(cartViewedEvent.event(), cartViewedEvent.build())
+
+//        MainApplication.rudderClient.reset()
 
         val checkoutStartedEvent = CheckoutStartedEvent().withOrder(order)
         MainApplication.rudderClient.track(

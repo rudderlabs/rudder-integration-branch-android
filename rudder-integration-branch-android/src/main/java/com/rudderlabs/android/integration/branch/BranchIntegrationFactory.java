@@ -3,7 +3,6 @@ package com.rudderlabs.android.integration.branch;
 import android.app.Application;
 
 import com.google.gson.Gson;
-import com.rudderlabs.android.sdk.core.MessageType;
 import com.rudderlabs.android.sdk.core.RudderClient;
 import com.rudderlabs.android.sdk.core.RudderConfig;
 import com.rudderlabs.android.sdk.core.RudderIntegration;
@@ -81,7 +80,7 @@ public class BranchIntegrationFactory extends RudderIntegration<Branch> {
         String eventType = element.getType();
         if (eventType != null) {
             switch (eventType) {
-                case MessageType.IDENTIFY:
+                case "identify":
                     String userId = element.getUserId();
                     if (userId != null) {
                         // branch supports userId to be max 127 characters
@@ -89,7 +88,7 @@ public class BranchIntegrationFactory extends RudderIntegration<Branch> {
                         branchInstance.setIdentity(userId);
                     }
                     break;
-                case MessageType.TRACK:
+                case "track":
                     String eventName = element.getEventName();
                     if (eventName != null) {
                         Map<String, Object> property = element.getProperties();
@@ -151,9 +150,8 @@ public class BranchIntegrationFactory extends RudderIntegration<Branch> {
                                     this.logEventToBranch(plv_be, property);
                                     break;
                                 case ECommerceEvents.PRODUCT_REVIEWED:
-                                    ContentMetadata prv_cmd = this.getSingleProductMetaData(property);
                                     BranchEvent prv_be = new BranchEvent(BRANCH_STANDARD_EVENT.RATE);
-                                    prv_be.addContentItems(new BranchUniversalObject().setContentMetadata(prv_cmd));
+                                    prv_be.addContentItems(new BranchUniversalObject().setContentMetadata(this.getSingleProductMetaData(property)));
                                     this.logEventToBranch(prv_be, property);
                                     break;
                                 case ECommerceEvents.PRODUCT_SHARED:
@@ -187,7 +185,7 @@ public class BranchIntegrationFactory extends RudderIntegration<Branch> {
                         }
                     }
                     break;
-                case MessageType.SCREEN:
+                case "screen":
                     // nothing to do as of now
                     break;
                 default:
