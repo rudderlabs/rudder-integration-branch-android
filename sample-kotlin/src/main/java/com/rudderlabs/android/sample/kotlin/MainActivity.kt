@@ -1,12 +1,10 @@
 package com.rudderlabs.android.sample.kotlin
 
 import android.os.Bundle
-import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
-import com.rudderlabs.android.sdk.core.RudderMessageBuilder
-import com.rudderlabs.android.sdk.core.TrackPropertyBuilder
-import com.rudderlabs.android.sdk.core.ecomm.*
-import com.rudderlabs.android.sdk.core.ecomm.events.*
+import com.rudderstack.android.sdk.core.RudderMessageBuilder
+import com.rudderstack.android.sdk.core.ecomm.*
+import com.rudderstack.android.sdk.core.ecomm.events.*
 
 class MainActivity : AppCompatActivity() {
     private var count = 0
@@ -88,7 +86,7 @@ class MainActivity : AppCompatActivity() {
         MainApplication.rudderClient.track(
             RudderMessageBuilder()
                 .setEventName(productAddedToCartEvent.event())
-                .setProperty(productAddedToCartEvent.build())
+                .setProperty(productAddedToCartEvent.properties())
                 .build()
         )
 
@@ -97,55 +95,58 @@ class MainActivity : AppCompatActivity() {
             .withProduct(productA)
         MainApplication.rudderClient.track(
             RudderMessageBuilder()
-                .setProperty(productAddedToWishListEvent.build())
+                .setProperty(productAddedToWishListEvent.properties())
                 .setEventName(productAddedToWishListEvent.event())
         )
 
         val cartViewedEvent = CartViewedEvent().withCart(cart)
-        MainApplication.rudderClient.track(cartViewedEvent.event(), cartViewedEvent.build())
+        MainApplication.rudderClient.track(cartViewedEvent.event(), cartViewedEvent.properties())
 
 //        MainApplication.rudderClient.reset()
 
         val checkoutStartedEvent = CheckoutStartedEvent().withOrder(order)
         MainApplication.rudderClient.track(
             checkoutStartedEvent.event(),
-            checkoutStartedEvent.build()
+            checkoutStartedEvent.properties()
         )
 
         val paymentInfoEnteredEvent = PaymentInfoEnteredEvent()
             .withCheckout(checkout)
         MainApplication.rudderClient.track(
             paymentInfoEnteredEvent.event(),
-            paymentInfoEnteredEvent.build()
+            paymentInfoEnteredEvent.properties()
         )
 
         val orderCompletedEvent = OrderCompletedEvent().withOrder(order)
         MainApplication.rudderClient.track(
             orderCompletedEvent.event(),
-            orderCompletedEvent.build()
+            orderCompletedEvent.properties()
         )
 
         val spendCreditEvent = OrderCompletedEvent().withOrder(order)
         MainApplication.rudderClient.track(
             "Spend Credits",
-            spendCreditEvent.build()
+            spendCreditEvent.properties()
         )
 
         val productSearchedEvent = ProductSearchedEvent().withQuery("blue hot pants")
         MainApplication.rudderClient.track(
             productSearchedEvent.event(),
-            productSearchedEvent.build()
+            productSearchedEvent.properties()
         )
 
         val productViewedEvent = ProductViewedEvent()
             .withProduct(productA);
-        MainApplication.rudderClient.track(productViewedEvent.event(), productViewedEvent.build())
+        MainApplication.rudderClient.track(
+            productViewedEvent.event(),
+            productViewedEvent.properties()
+        )
 
         val productListViewedEvent = ProductListViewedEvent()
             .withProducts(productA, productB, productC)
         MainApplication.rudderClient.track(
             productListViewedEvent.event(),
-            productListViewedEvent.build()
+            productListViewedEvent.properties()
         )
 
         val productReviewedEvent = ProductReviewedEvent()
@@ -155,7 +156,7 @@ class MainActivity : AppCompatActivity() {
             .withReviewId("some_review_id")
         MainApplication.rudderClient.track(
             productReviewedEvent.event(),
-            productReviewedEvent.build()
+            productReviewedEvent.properties()
         )
 
         val productSharedEvent = ProductSharedEvent()
@@ -165,8 +166,7 @@ class MainActivity : AppCompatActivity() {
             .withSocialChannel("Gmail")
         MainApplication.rudderClient.track(
             productSharedEvent.event(),
-            productSharedEvent.build()
+            productSharedEvent.properties()
         )
-
     }
 }

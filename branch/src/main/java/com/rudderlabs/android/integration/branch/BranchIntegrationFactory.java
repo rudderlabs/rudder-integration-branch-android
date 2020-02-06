@@ -3,12 +3,12 @@ package com.rudderlabs.android.integration.branch;
 import android.app.Application;
 
 import com.google.gson.Gson;
-import com.rudderlabs.android.sdk.core.RudderClient;
-import com.rudderlabs.android.sdk.core.RudderConfig;
-import com.rudderlabs.android.sdk.core.RudderIntegration;
-import com.rudderlabs.android.sdk.core.RudderLogger;
-import com.rudderlabs.android.sdk.core.RudderMessage;
-import com.rudderlabs.android.sdk.core.ecomm.ECommerceEvents;
+import com.rudderstack.android.sdk.core.RudderClient;
+import com.rudderstack.android.sdk.core.RudderConfig;
+import com.rudderstack.android.sdk.core.RudderIntegration;
+import com.rudderstack.android.sdk.core.RudderLogger;
+import com.rudderstack.android.sdk.core.RudderMessage;
+import com.rudderstack.android.sdk.core.ecomm.ECommerceEvents;
 
 import java.util.ArrayList;
 import java.util.Arrays;
