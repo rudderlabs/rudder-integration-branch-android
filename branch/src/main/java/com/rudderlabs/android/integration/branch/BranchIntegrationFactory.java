@@ -1,6 +1,7 @@
 package com.rudderlabs.android.integration.branch;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.rudderstack.android.sdk.core.RudderClient;
@@ -73,11 +74,14 @@ public class BranchIntegrationFactory extends RudderIntegration<Branch> {
         Branch.getInstance().logout();
     }
 
+    private static final String TAG = "BranchIntegration";
+
     @Override
     public void dump(RudderMessage element) {
         if (element == null) return;
 
         String eventType = element.getType();
+        Log.d(TAG, "EventType: " + eventType);
         if (eventType != null) {
             switch (eventType) {
                 case "identify":
@@ -90,98 +94,98 @@ public class BranchIntegrationFactory extends RudderIntegration<Branch> {
                     break;
                 case "track":
                     String eventName = element.getEventName();
+                    Log.d(TAG, "dump: eventName: " + eventName);
                     if (eventName != null) {
                         Map<String, Object> property = element.getProperties();
                         Map<String, Object> userProperty = element.getUserProperties();
-                        if (property != null) {
-                            switch (eventName) {
-                                case ECommerceEvents.PRODUCT_ADDED:
-                                    ContentMetadata pa_cmd = this.getSingleProductMetaData(property);
-                                    BranchEvent pa_be = new BranchEvent(BRANCH_STANDARD_EVENT.ADD_TO_CART);
-                                    pa_be.addContentItems(new BranchUniversalObject().setContentMetadata(pa_cmd));
-                                    this.logEventToBranch(pa_be, property);
-                                    break;
-                                case ECommerceEvents.PRODUCT_ADDED_TO_WISH_LIST:
-                                    BranchEvent pawl_be = new BranchEvent(BRANCH_STANDARD_EVENT.ADD_TO_WISHLIST);
-                                    this.logEventToBranch(pawl_be, property);
-                                    break;
-                                case ECommerceEvents.CART_VIEWED:
-                                    BranchEvent cv_be = new BranchEvent(BRANCH_STANDARD_EVENT.VIEW_CART);
-                                    this.appendOrderProperty(cv_be, property);
-                                    this.logEventToBranch(cv_be, property);
-                                    break;
-                                case ECommerceEvents.CHECKOUT_STARTED:
-                                    BranchEvent cs_be = new BranchEvent(BRANCH_STANDARD_EVENT.INITIATE_PURCHASE);
-                                    this.appendOrderProperty(cs_be, property);
-                                    this.logEventToBranch(cs_be, property);
-                                    break;
-                                case ECommerceEvents.PAYMENT_INFO_ENTERED:
-                                    BranchEvent pie_be = new BranchEvent(BRANCH_STANDARD_EVENT.ADD_PAYMENT_INFO);
-                                    this.appendOrderProperty(pie_be, property);
-                                    this.logEventToBranch(pie_be, property);
-                                    break;
-                                case ECommerceEvents.ORDER_COMPLETED:
-                                    BranchEvent oc_be = new BranchEvent(BRANCH_STANDARD_EVENT.PURCHASE);
-                                    this.appendOrderProperty(oc_be, property);
-                                    this.logEventToBranch(oc_be, property);
-                                    break;
-                                case "Spend Credits":
-                                    BranchEvent sc_be = new BranchEvent(BRANCH_STANDARD_EVENT.SPEND_CREDITS);
-                                    this.appendOrderProperty(sc_be, property);
-                                    this.logEventToBranch(sc_be, property);
-                                    break;
-                                case ECommerceEvents.PRODUCTS_SEARCHED:
-                                    BranchEvent ps_be = new BranchEvent(BRANCH_STANDARD_EVENT.SEARCH);
-                                    if (property.containsKey("query")) {
-                                        ps_be.addContentItems(new BranchUniversalObject().addKeyWord((String) property.get("query")));
-                                    }
-                                    this.logEventToBranch(ps_be, property);
-                                    break;
-                                case ECommerceEvents.PRODUCT_VIEWED:
-                                    BranchEvent pv_be = new BranchEvent(BRANCH_STANDARD_EVENT.VIEW_ITEM);
-                                    pv_be.addContentItems(new BranchUniversalObject()
-                                            .setContentMetadata(this.getSingleProductMetaData(property))
-                                    );
-                                    this.logEventToBranch(pv_be, property);
-                                    break;
-                                case ECommerceEvents.PRODUCT_LIST_VIEWED:
-                                    BranchEvent plv_be = new BranchEvent(BRANCH_STANDARD_EVENT.VIEW_ITEMS);
-                                    this.appendOrderProperty(plv_be, property);
-                                    this.logEventToBranch(plv_be, property);
-                                    break;
-                                case ECommerceEvents.PRODUCT_REVIEWED:
-                                    BranchEvent prv_be = new BranchEvent(BRANCH_STANDARD_EVENT.RATE);
-                                    prv_be.addContentItems(new BranchUniversalObject().setContentMetadata(this.getSingleProductMetaData(property)));
-                                    this.logEventToBranch(prv_be, property);
-                                    break;
-                                case ECommerceEvents.PRODUCT_SHARED:
-                                    ContentMetadata prs_cmd = this.getSingleProductMetaData(property);
-                                    BranchEvent prs_be = new BranchEvent(BRANCH_STANDARD_EVENT.SHARE);
-                                    prs_be.addContentItems(new BranchUniversalObject().setContentMetadata(prs_cmd));
-                                    this.logEventToBranch(prs_be, property);
-                                    break;
-                                case "Complete Registration":
-                                    BranchEvent cr_be = new BranchEvent(BRANCH_STANDARD_EVENT.COMPLETE_REGISTRATION);
-                                    this.logEventToBranch(cr_be, property);
-                                    break;
-                                case "Complete Tutorial":
-                                    BranchEvent ct_be = new BranchEvent(BRANCH_STANDARD_EVENT.COMPLETE_TUTORIAL);
-                                    this.logEventToBranch(ct_be, property);
-                                    break;
-                                case "Achieve Level":
-                                    BranchEvent al_be = new BranchEvent(BRANCH_STANDARD_EVENT.ACHIEVE_LEVEL);
-                                    this.logEventToBranch(al_be, property);
-                                    break;
-                                case "Unlock Achievement":
-                                    BranchEvent ua_be = new BranchEvent(BRANCH_STANDARD_EVENT.UNLOCK_ACHIEVEMENT);
-                                    this.logEventToBranch(ua_be, property);
-                                    break;
-                                default:
-                                    // generic track event. send custom event
-                                    BranchEvent ge_be = new BranchEvent(eventName);
-                                    this.logEventToBranch(ge_be, property);
-                                    break;
-                            }
+                        switch (eventName) {
+                            case ECommerceEvents.PRODUCT_ADDED:
+                                ContentMetadata pa_cmd = this.getSingleProductMetaData(property);
+                                BranchEvent pa_be = new BranchEvent(BRANCH_STANDARD_EVENT.ADD_TO_CART);
+                                pa_be.addContentItems(new BranchUniversalObject().setContentMetadata(pa_cmd));
+                                this.logEventToBranch(pa_be, property);
+                                break;
+                            case ECommerceEvents.PRODUCT_ADDED_TO_WISH_LIST:
+                                BranchEvent pawl_be = new BranchEvent(BRANCH_STANDARD_EVENT.ADD_TO_WISHLIST);
+                                this.logEventToBranch(pawl_be, property);
+                                break;
+                            case ECommerceEvents.CART_VIEWED:
+                                BranchEvent cv_be = new BranchEvent(BRANCH_STANDARD_EVENT.VIEW_CART);
+                                this.appendOrderProperty(cv_be, property);
+                                this.logEventToBranch(cv_be, property);
+                                break;
+                            case ECommerceEvents.CHECKOUT_STARTED:
+                                BranchEvent cs_be = new BranchEvent(BRANCH_STANDARD_EVENT.INITIATE_PURCHASE);
+                                this.appendOrderProperty(cs_be, property);
+                                this.logEventToBranch(cs_be, property);
+                                break;
+                            case ECommerceEvents.PAYMENT_INFO_ENTERED:
+                                BranchEvent pie_be = new BranchEvent(BRANCH_STANDARD_EVENT.ADD_PAYMENT_INFO);
+                                this.appendOrderProperty(pie_be, property);
+                                this.logEventToBranch(pie_be, property);
+                                break;
+                            case ECommerceEvents.ORDER_COMPLETED:
+                                BranchEvent oc_be = new BranchEvent(BRANCH_STANDARD_EVENT.PURCHASE);
+                                this.appendOrderProperty(oc_be, property);
+                                this.logEventToBranch(oc_be, property);
+                                break;
+                            case "Spend Credits":
+                                BranchEvent sc_be = new BranchEvent(BRANCH_STANDARD_EVENT.SPEND_CREDITS);
+                                this.appendOrderProperty(sc_be, property);
+                                this.logEventToBranch(sc_be, property);
+                                break;
+                            case ECommerceEvents.PRODUCTS_SEARCHED:
+                                BranchEvent ps_be = new BranchEvent(BRANCH_STANDARD_EVENT.SEARCH);
+                                if (property != null && property.containsKey("query")) {
+                                    ps_be.addContentItems(new BranchUniversalObject().addKeyWord((String) property.get("query")));
+                                }
+                                this.logEventToBranch(ps_be, property);
+                                break;
+                            case ECommerceEvents.PRODUCT_VIEWED:
+                                BranchEvent pv_be = new BranchEvent(BRANCH_STANDARD_EVENT.VIEW_ITEM);
+                                pv_be.addContentItems(new BranchUniversalObject()
+                                        .setContentMetadata(this.getSingleProductMetaData(property))
+                                );
+                                this.logEventToBranch(pv_be, property);
+                                break;
+                            case ECommerceEvents.PRODUCT_LIST_VIEWED:
+                                BranchEvent plv_be = new BranchEvent(BRANCH_STANDARD_EVENT.VIEW_ITEMS);
+                                this.appendOrderProperty(plv_be, property);
+                                this.logEventToBranch(plv_be, property);
+                                break;
+                            case ECommerceEvents.PRODUCT_REVIEWED:
+                                BranchEvent prv_be = new BranchEvent(BRANCH_STANDARD_EVENT.RATE);
+                                prv_be.addContentItems(new BranchUniversalObject().setContentMetadata(this.getSingleProductMetaData(property)));
+                                this.logEventToBranch(prv_be, property);
+                                break;
+                            case ECommerceEvents.PRODUCT_SHARED:
+                                ContentMetadata prs_cmd = this.getSingleProductMetaData(property);
+                                BranchEvent prs_be = new BranchEvent(BRANCH_STANDARD_EVENT.SHARE);
+                                prs_be.addContentItems(new BranchUniversalObject().setContentMetadata(prs_cmd));
+                                this.logEventToBranch(prs_be, property);
+                                break;
+                            case "Complete Registration":
+                                BranchEvent cr_be = new BranchEvent(BRANCH_STANDARD_EVENT.COMPLETE_REGISTRATION);
+                                this.logEventToBranch(cr_be, property);
+                                break;
+                            case "Complete Tutorial":
+                                BranchEvent ct_be = new BranchEvent(BRANCH_STANDARD_EVENT.COMPLETE_TUTORIAL);
+                                this.logEventToBranch(ct_be, property);
+                                break;
+                            case "Achieve Level":
+                                BranchEvent al_be = new BranchEvent(BRANCH_STANDARD_EVENT.ACHIEVE_LEVEL);
+                                this.logEventToBranch(al_be, property);
+                                break;
+                            case "Unlock Achievement":
+                                BranchEvent ua_be = new BranchEvent(BRANCH_STANDARD_EVENT.UNLOCK_ACHIEVEMENT);
+                                this.logEventToBranch(ua_be, property);
+                                break;
+                            default:
+                                // generic track event. send custom event
+                                Log.d(TAG, "dump: logCustomEvent:" + eventName);
+                                BranchEvent ge_be = new BranchEvent(eventName);
+                                this.logEventToBranch(ge_be, property);
+                                break;
                         }
                     }
                     break;
@@ -195,62 +199,70 @@ public class BranchIntegrationFactory extends RudderIntegration<Branch> {
     }
 
     private void logEventToBranch(BranchEvent be, Map<String, Object> property) {
-        Gson gson = new Gson();
-        Set<String> keySet = property.keySet();
-        for (String key : keySet) {
-            if (!predefinedKeysList.contains(key)) {
-                Object value = property.get(key);
-                if (value instanceof String) {
-                    be.addCustomDataProperty(key, (String) value);
-                } else if (value instanceof Integer) {
-                    be.addCustomDataProperty(key, Integer.toString((Integer) value));
-                } else if (value instanceof Double) {
-                    be.addCustomDataProperty(key, Double.toString((Double) value));
-                } else if (value instanceof Float) {
-                    be.addCustomDataProperty(key, Float.toString((Float) value));
-                } else if (value instanceof Boolean) {
-                    be.addCustomDataProperty(key, Boolean.toString((Boolean) value));
-                } else {
-                    be.addCustomDataProperty(key, gson.toJson(value));
+        Log.d(TAG, "logEventToBranch: event: " + be.getEventName());
+        if (property != null) {
+            Gson gson = new Gson();
+            Set<String> keySet = property.keySet();
+            for (String key : keySet) {
+                if (!predefinedKeysList.contains(key)) {
+                    Object value = property.get(key);
+                    if (value instanceof String) {
+                        be.addCustomDataProperty(key, (String) value);
+                    } else if (value instanceof Integer) {
+                        be.addCustomDataProperty(key, Integer.toString((Integer) value));
+                    } else if (value instanceof Double) {
+                        be.addCustomDataProperty(key, Double.toString((Double) value));
+                    } else if (value instanceof Float) {
+                        be.addCustomDataProperty(key, Float.toString((Float) value));
+                    } else if (value instanceof Boolean) {
+                        be.addCustomDataProperty(key, Boolean.toString((Boolean) value));
+                    } else {
+                        be.addCustomDataProperty(key, gson.toJson(value));
+                    }
                 }
             }
+        } else {
+            Log.d(TAG, "logEventToBranch: properties is null");
         }
         be.logEvent(applicationContext);
+        Log.d(TAG, "logEventToBranch: Event logged to branch");
     }
 
     private void appendOrderProperty(BranchEvent be, Map<String, Object> property) {
-        ArrayList<BranchUniversalObject> buos = new ArrayList<>();
-        if (property.containsKey("products")) {
-            ArrayList<Map<String, Object>> products = (ArrayList<Map<String, Object>>) property.get("products");
-            if (products != null) {
-                for (Map<String, Object> product : products) {
-                    buos.add(new BranchUniversalObject().setContentMetadata(this.getSingleProductMetaData(product)));
+        if (property != null) {
+            ArrayList<BranchUniversalObject> buos = new ArrayList<>();
+            if (property.containsKey("products")) {
+                ArrayList<Map<String, Object>> products = (ArrayList<Map<String, Object>>) property.get("products");
+                if (products != null) {
+                    for (Map<String, Object> product : products) {
+                        buos.add(new BranchUniversalObject().setContentMetadata(this.getSingleProductMetaData(product)));
+                    }
                 }
             }
-        }
-        if (!buos.isEmpty()) {
-            be.addContentItems(buos);
-        }
-        if (property.containsKey("affiliation")) {
-            be.setAffiliation((String) property.get("affiliation"));
-        }
-        if (property.containsKey("currency")) {
-            be.setCurrency(CurrencyType.getValue((String) property.get("currency")));
-        }
-        if (property.containsKey("coupon")) {
-            be.setCoupon((String) property.get("coupon"));
-        }
-        if (property.containsKey("revenue")) {
-            be.setRevenue((Double) property.get("revenue"));
-        }
-        if (property.containsKey("shipping")) {
-            be.setShipping((Double) property.get("shipping"));
-        }
-        if (property.containsKey("tax")) {
-            be.setTax((Double) property.get("tax"));
-        }
-        if (property.containsKey("order_id")) {
-            be.setTransactionID((String) property.get("order_id"));
+            if (!buos.isEmpty()) {
+                be.addContentItems(buos);
+            }
+            if (property.containsKey("affiliation")) {
+                be.setAffiliation((String) property.get("affiliation"));
+            }
+            if (property.containsKey("currency")) {
+                be.setCurrency(CurrencyType.getValue((String) property.get("currency")));
+            }
+            if (property.containsKey("coupon")) {
+                be.setCoupon((String) property.get("coupon"));
+            }
+            if (property.containsKey("revenue")) {
+                be.setRevenue((Double) property.get("revenue"));
+            }
+            if (property.containsKey("shipping")) {
+                be.setShipping((Double) property.get("shipping"));
+            }
+            if (property.containsKey("tax")) {
+                be.setTax((Double) property.get("tax"));
+            }
+            if (property.containsKey("order_id")) {
+                be.setTransactionID((String) property.get("order_id"));
+            }
         }
     }
 

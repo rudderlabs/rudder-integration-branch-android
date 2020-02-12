@@ -11,7 +11,7 @@ ext {
     siteUrl = 'https://github.com/rudderlabs/rudder-sdk-android'
     gitUrl = 'https://github.com/rudderlabs/rudder-integration-branch-android.git'
 
-    libraryVersion = '0.1.1'
+    libraryVersion = '0.1.2'
 
     developerId = 'arnabp92'
     developerName = 'Arnab Pal'
