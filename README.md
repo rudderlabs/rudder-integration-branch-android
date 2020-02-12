@@ -1,4 +1,4 @@
-[ ![Download](https://api.bintray.com/packages/rudderstack/rudderstack/branch/images/download.svg?version=0.1.1) ](https://bintray.com/rudderstack/rudderstack/branch/0.1.1/link)
+[ ![Download](https://api.bintray.com/packages/rudderstack/rudderstack/branch/images/download.svg?version=0.1.2) ](https://bintray.com/rudderstack/rudderstack/branch/0.1.2/link)
 
 # What is Rudder?
 
@@ -24,7 +24,7 @@ repositories {
 3. Add the dependency under ```dependencies```
 ```
 implementation 'com.rudderstack.android.sdk:core:1.0'
-implementation 'com.rudderstack.android.integration:branch:0.1.1'
+implementation 'com.rudderstack.android.integration:branch:0.1.2'
 ```
 
 ## Initialize ```RudderClient```
