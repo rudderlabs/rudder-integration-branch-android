@@ -31,3 +31,5 @@
     java.lang.String getId ();
     boolean isLimitAdTrackingEnabled();
 }
+
+-keep class io.branch.referral.*;

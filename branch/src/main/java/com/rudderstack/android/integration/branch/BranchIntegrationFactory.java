@@ -1,4 +1,4 @@
-package com.rudderlabs.android.integration.branch;
+package com.rudderstack.android.integration.branch;
 
 import android.app.Application;
 import android.util.Log;

@@ -1,5 +1,3 @@
-[ ![Download](https://api.bintray.com/packages/rudderstack/rudderstack/branch/images/download.svg?version=0.1.2) ](https://bintray.com/rudderstack/rudderstack/branch/0.1.2/link)
-
 # What is Rudder?
 
 **Short answer:** 
@@ -11,7 +9,7 @@ Rudder is a platform for collecting, storing and routing customer event data to 
 Released under [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 
 ## Getting Started with BranchIO Integration of Android SDK
-1. Add [BranchIO](https://branch.io) as a destination in the [Dashboard](https://app.rudderlabs.com/) and define ```apiToken``` and ```eventMapping```
+1. Add [BranchIO](https://branch.io) as a destination in the [Dashboard](https://app.rudderlabs.com/) and define ```branchKey```
 
 2. Add these lines to your ```app/build.gradle```
 ```
@@ -23,17 +21,23 @@ repositories {
 ```
 3. Add the dependency under ```dependencies```
 ```
-implementation 'com.rudderstack.android.sdk:core:1.0'
-implementation 'com.rudderstack.android.integration:branch:0.1.2'
+implementation 'com.rudderstack.android.sdk:core:1.0.1'
+implementation 'com.rudderstack.android.integration:branch:0.1.3'
+
+// branch SDK requirements
+implementation 'io.branch.sdk.android:library:4.3.2'
+implementation'com.android.installreferrer:installreferrer:1.1.2'
+implementation 'com.google.firebase:firebase-appindexing:19.1.0'
+implementation 'com.google.android.gms:play-services-ads:16+'
 ```
 
 ## Initialize ```RudderClient```
 ```
 val rudderClient: RudderClient = RudderClient.getInstance(
     this,
-    WRITE_KEY,
+    <WRITE_KEY>,
     RudderConfig.Builder()
-        .withEndPointUri(END_POINT_URI)
+        .withDataPlaneUrl(<DATA_PLANE_URL>)
         .withLogLevel(RudderLogger.RudderLogLevel.DEBUG)
         .withFactory(BranchIntegrationFactory.FACTORY)
         .build()
@@ -43,7 +47,5 @@ val rudderClient: RudderClient = RudderClient.getInstance(
 ## Send Events
 Follow the steps from [Rudder Android SDK](https://github.com/rudderlabs/rudder-sdk-android)
 
-# Coming Soon
-1. Native platform SDK integration support
-2. More documentation
-3. More destination support
+## Contact Us
+If you come across any issues while configuring or using RudderStack, please feel free to [contact us](https://rudderstack.com/contact/) or start a conversation on our [Discord](https://discordapp.com/invite/xNEdEGw) channel. We will be happy to help you.
