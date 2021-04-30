@@ -30,7 +30,7 @@ dependencies {
     implementation 'io.branch.sdk.android:library:4.3.2'
     implementation'com.android.installreferrer:installreferrer:1.1.2'
     implementation 'com.google.firebase:firebase-appindexing:19.1.0'
-    implementation 'com.google.android.gms:play-services-ads:16+'
+    implementation 'com.google.android.gms:play-services-ads:16.0.0'
 
     testImplementation 'com.android.support.test:rules:1.0.2'
     testImplementation 'com.android.support.test:runner:1.0.2'
