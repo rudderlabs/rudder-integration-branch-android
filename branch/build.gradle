@@ -1,16 +1,5 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
-    }
-}
 
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
 
 android {
     compileSdkVersion 29
@@ -30,22 +19,18 @@ android {
     }
 }
 
-repositories {
-    maven { url "https://dl.bintray.com/rudderstack/rudderstack" }
-}
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 
     // rudder core sdk
-    compileOnly 'com.rudderstack.android.sdk:core:1.0.1'
+    compileOnly 'com.rudderstack.android.sdk:core:1.0.11'
     implementation 'com.google.code.gson:gson:2.8.6'
 
     // branch sdk and other requirements
     implementation 'io.branch.sdk.android:library:4.3.2'
     implementation'com.android.installreferrer:installreferrer:1.1.2'
     implementation 'com.google.firebase:firebase-appindexing:19.1.0'
-    implementation 'com.google.android.gms:play-services-ads:16+'
+    implementation 'com.google.android.gms:play-services-ads:16.0.0'
 
     testImplementation 'com.android.support.test:rules:1.0.2'
     testImplementation 'com.android.support.test:runner:1.0.2'
