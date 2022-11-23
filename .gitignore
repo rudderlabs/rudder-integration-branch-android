@@ -7,3 +7,4 @@ rudder-sdk-core/
 local.properties
 .project
 /.settings
+node_modules/*
