@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.ads.identifier.AdvertisingIdClient
 import com.rudderstack.android.sdk.core.RudderClient
 import com.rudderstack.android.sdk.core.RudderProperty
-import com.rudderstack.android.sdk.core.RudderTraits
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,8 +18,7 @@ class MainActivity : AppCompatActivity() {
             println("AdvertisingId: $advertisingId")
         }.start()
 
-        findViewById<Button>(R.id.identifyWithoutTraits).setOnClickListener { identifyWithoutTraits() }
-        findViewById<Button>(R.id.identifyWithTraits).setOnClickListener { identifyWithTraits() }
+        findViewById<Button>(R.id.identify).setOnClickListener { identify() }
 
         // Commerce Events
         findViewById<Button>(R.id.productAdded).setOnClickListener { productAdded() }
@@ -60,18 +58,8 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.reset).setOnClickListener { reset() }
     }
 
-    private fun identifyWithoutTraits() {
-        RudderClient.getInstance()?.identify("some_user_id without traits")
-    }
-
-    private fun identifyWithTraits() {
-        RudderClient.getInstance()?.identify(
-            "some_user_id with traits",
-            RudderTraits()
-                .putEmail("test@example.com")
-                .put("Key-1", "value-1"),
-            null
-        )
+    private fun identify() {
+        RudderClient.getInstance()?.identify("some_user_id")
     }
 
     // Commerce Events
@@ -208,7 +196,7 @@ class MainActivity : AppCompatActivity() {
             "currency" to "INR",
             "brand" to "some_brand_2",
             "name" to "some_name_2",
-            "category" to "some_category_2",
+            "category" to "Animals & Pet Supplies", // Make sure this is a valid value, refer to the Branch "ProductCategory" class.
             "sku" to "some_sku_2",
             "product_id" to "some_product_id_2",
             "quantity" to 20.0,

@@ -1,6 +1,7 @@
 package com.rudderstack.android.integration.branch;
 
 import android.app.Application;
+import androidx.annotation.VisibleForTesting;
 
 import com.google.gson.Gson;
 import com.rudderstack.android.sdk.core.RudderClient;
@@ -44,6 +45,12 @@ public class BranchIntegrationFactory extends RudderIntegration<Branch> {
             return BRANCH_KEY;
         }
     };
+
+    @VisibleForTesting
+    BranchIntegrationFactory(Branch branchInstance, Application applicationContext) {
+        this.branchInstance = branchInstance;
+        this.applicationContext = applicationContext;
+    }
 
     private BranchIntegrationFactory(Object config, RudderConfig rudderConfig) {
         applicationContext = RudderClient.getApplication();

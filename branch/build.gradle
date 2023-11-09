@@ -1,5 +1,7 @@
-
-apply plugin: 'com.android.library'
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
 
 android {
     compileSdk 33
@@ -14,6 +16,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField("String", "VERSION_NAME", "\"${VERSION_NAME}\"")
         }
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11
     }
 }
 
@@ -32,6 +46,13 @@ dependencies {
     testImplementation 'com.android.support.test:runner:1.0.2'
     testImplementation "org.robolectric:robolectric:4.3"
     testImplementation "androidx.test:core-ktx:1.2.0"
+
+    // unit test dependencies
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    // This is required to mock the Branch class
+    testImplementation "com.android.billingclient:billing:6.0.1"
+    testImplementation "io.mockk:mockk-android:1.13.8"
+    testImplementation "io.mockk:mockk-agent:1.13.8"
 }
 
 apply from: rootProject.file('gradle/mvn-publish.gradle')
