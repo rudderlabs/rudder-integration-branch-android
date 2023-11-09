@@ -1,15 +1,24 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
+Properties properties = new Properties()
+if (project.rootProject.file('sample-kotlin/local.properties').canRead()) {
+    properties.load(project.rootProject.file("sample-kotlin/local.properties").newDataInputStream())
+}
+
 android {
     compileSdk 33
     defaultConfig {
         applicationId "com.rudderstack.sample.braze"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 33
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "DATA_PLANE_URL", properties.getProperty('dataplaneUrl', "\"https://api.rudderstack.com\""))
+        buildConfigField("String", "CONTROL_PLANE_URL", properties.getProperty('controlplaneUrl', "\"https://api.rudderstack.com\""))
+        buildConfigField("String", "WRITE_KEY", properties.getProperty('writeKey', ''))
     }
     buildTypes {
         release {
@@ -26,9 +35,19 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
-    implementation 'com.rudderstack.android.sdk:core:1.0.11'
+    implementation 'com.rudderstack.android.sdk:core:[1.20.1, 2.0.0)'
     implementation project(':branch')
-    implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
+
+    // Optional dependencies required by Branch
+    // required if your app is in the Google Play Store (tip: avoid using bundled play services libs)
+    implementation 'com.google.android.gms:play-services-ads-identifier:17.1.0+'
+    // alternatively, use the following lib for getting the AAID
+    // implementation 'com.google.android.gms:play-services-ads:17.2.0'
+    // optional
+    // Chrome Tab matching (enables 100% guaranteed matching based on cookies)
+    implementation 'androidx.browser:browser:1.0.0'
+    // Replace above with the line below if you do not support androidx
+    // implementation 'com.android.support:customtabs:28.0.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
