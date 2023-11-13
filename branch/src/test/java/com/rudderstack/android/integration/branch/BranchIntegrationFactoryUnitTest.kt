@@ -134,7 +134,6 @@ class BranchIntegrationFactoryUnitTest {
     @Test
     fun testIdentifyEvent() {
         val userIdSlot = slot<String>()
-        val mockBranchEvent = mockk<BranchEvent>()
 
         every { branchInstance.setIdentity(capture(userIdSlot)) } returns Unit
 
@@ -147,12 +146,10 @@ class BranchIntegrationFactoryUnitTest {
     @Test
     fun testIdentifyEventWith128CharacterUserId() {
         val userIdSlot = slot<String>()
-        val mockBranchEvent = mockk<BranchEvent>()
 
         every { branchInstance.setIdentity(capture(userIdSlot)) } returns Unit
 
         val message = testUtils.getMessage("identifyWith128CharacterUserId.json")
-        val userId = testUtils.getUserIdOfLength(128)
         branchIntegrationFactory?.dump(message)
 
         testUtils.verifyIdentifyWhenUserIdIsTruncated(userIdSlot.captured)
