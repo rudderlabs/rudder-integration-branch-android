@@ -125,7 +125,7 @@ class BranchIntegrationFactoryUnitTest {
         mockkConstructor(BranchEvent::class)
         every { constructedWith<BranchEvent>(OfTypeMatcher<String>(String::class)).addCustomDataProperty(capture(propertyNameSlot), capture(propertyValueSlot)) } returns mockBranchEvent
 
-        val message = testUtils.getMessage("customTrackEVent.json")
+        val message = testUtils.getMessage("customTrackEvent.json")
         branchIntegrationFactory?.dump(message)
 
         testUtils.verifyCustomProperty(propertyNameSlot, propertyValueSlot)
