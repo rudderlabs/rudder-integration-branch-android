@@ -14,7 +14,7 @@ import io.mockk.slot
 import org.junit.Before
 import org.junit.Test
 
-class ComScoreIntegrationFactoryUnitTest {
+class BranchIntegrationFactoryUnitTest {
     val testUtils = TestUtils()
     private var branchIntegrationFactory: BranchIntegrationFactory? = null
 
