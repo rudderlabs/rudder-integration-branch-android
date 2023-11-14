@@ -15,7 +15,7 @@ jobs:
   release:
     name: Publish new release
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'workflow_dispatch' }} || (startsWith(github.event.pull_request.head.ref, 'release/') && github.event.pull_request.merged == true) # only merged pull requests must trigger this job
+    if: (startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/heads/main')) && github.event.pull_request.merged == true # only merged pull requests must trigger this job
     steps:
       - name: Extract version from branch name (for release branches)
         id: extract-version
