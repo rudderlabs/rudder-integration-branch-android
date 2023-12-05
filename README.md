@@ -8,26 +8,24 @@ More information on RudderStack can be found [here](https://github.com/rudderlab
 
 1. Add [BranchIO](https://branch.io) as a destination in the [Dashboard](https://app.rudderlabs.com/) and define ```branchKey```
 
-2. Add these lines to your ```app/build.gradle```
+2. Add the dependency under ```dependencies```
+```
+implementation 'com.rudderstack.android.sdk:core:[1.20.1, 2.0.0)'
+implementation 'com.rudderstack.android.integration:branch:1.0.0'
+```
+
+3. Add the following optional dependencies needed by Branch under ```dependencies```
 
 ```
-repositories {
-  maven {
-    maven { url "https://dl.bintray.com/rudderstack/rudderstack" }
-  }
-}
-```
-3. Add the dependency under ```dependencies```
-
-```
-implementation 'com.rudderstack.android.sdk:core:1.0.1'
-implementation 'com.rudderstack.android.integration:branch:0.1.3'
-
-// branch SDK requirements
-implementation 'io.branch.sdk.android:library:4.3.2'
-implementation'com.android.installreferrer:installreferrer:1.1.2'
-implementation 'com.google.firebase:firebase-appindexing:19.1.0'
-implementation 'com.google.android.gms:play-services-ads:16+'
+// required if your app is in the Google Play Store (tip: avoid using bundled play services libs)
+implementation 'com.google.android.gms:play-services-ads-identifier:17.1.0+'
+// alternatively, use the following lib for getting the AAID
+// implementation 'com.google.android.gms:play-services-ads:17.2.0'
+// optional
+// Chrome Tab matching (enables 100% guaranteed matching based on cookies)
+implementation 'androidx.browser:browser:1.0.0'
+// Replace above with the line below if you do not support androidx
+// implementation 'com.android.support:customtabs:28.0.0'
 ```
 
 ## Initialize ```RudderClient```
