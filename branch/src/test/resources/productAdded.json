@@ -1,0 +1,69 @@
+{
+  "anonymousId": "4eb23185-ce4c-4358-a876-008d244effbb",
+  "channel": "mobile",
+  "context": {
+    "app": {
+      "build": "1",
+      "name": "RudderAndroidClient",
+      "namespace": "com.rudderstack.sample.braze",
+      "version": "1.0"
+    },
+    "device": {
+      "id": "7f01c7d542013ae5",
+      "manufacturer": "Google",
+      "model": "sdk_gphone64_arm64",
+      "name": "emulator64_arm64",
+      "type": "Android"
+    },
+    "library": {
+      "name": "com.rudderstack.android.sdk.core",
+      "version": "1.20.2"
+    },
+    "locale": "en-US",
+    "network": {
+      "carrier": "T-Mobile",
+      "cellular": true,
+      "wifi": true
+    },
+    "os": {
+      "name": "Android",
+      "version": "12"
+    },
+    "screen": {
+      "density": 440,
+      "height": 2148,
+      "width": 1080
+    },
+    "timezone": "Asia/Kolkata",
+    "traits": {
+      "anonymousId": "4eb23185-ce4c-4358-a876-008d244effbb",
+      "Key-1": "value-1",
+      "id": "some_user_id with traits",
+      "userId": "some_user_id with traits",
+      "email": "test@example.com"
+    },
+    "userAgent": "Dalvik/2.1.0 (Linux; U; Android 12; sdk_gphone64_arm64 Build/SE1A.220203.002.A1)"
+  },
+  "event": "Product Added",
+  "integrations": {
+    "All": true
+  },
+  "messageId": "00d8f626-0b00-4aee-bab3-a46dac2210de",
+  "properties": {
+    "key-1": "value-1",
+    "quantity": 10,
+    "price": 154.79,
+    "product_id": "some_product_id",
+    "key-2": 123,
+    "name": "some_name",
+    "variant": "some_variant",
+    "rating": 4.5,
+    "currency": "USD",
+    "category": "Animals & Pet Supplies",
+    "sku": "some_sku",
+    "brand": "some_brand"
+  },
+  "originalTimestamp": "2023-11-09T13:39:03.645Z",
+  "type": "track",
+  "userId": "some_user_id with traits"
+}

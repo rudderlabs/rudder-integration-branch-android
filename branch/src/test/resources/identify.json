@@ -1,0 +1,55 @@
+{
+  "anonymousId": "4eb23185-ce4c-4358-a876-008d244effbb",
+  "channel": "mobile",
+  "context": {
+    "app": {
+      "build": "1",
+      "name": "RudderAndroidClient",
+      "namespace": "com.rudderstack.sample.braze",
+      "version": "1.0"
+    },
+    "device": {
+      "id": "7f01c7d542013ae5",
+      "manufacturer": "Google",
+      "model": "sdk_gphone64_arm64",
+      "name": "emulator64_arm64",
+      "type": "Android"
+    },
+    "library": {
+      "name": "com.rudderstack.android.sdk.core",
+      "version": "1.20.2"
+    },
+    "locale": "en-US",
+    "network": {
+      "carrier": "T-Mobile",
+      "cellular": true,
+      "wifi": true
+    },
+    "os": {
+      "name": "Android",
+      "version": "12"
+    },
+    "screen": {
+      "density": 440,
+      "height": 2148,
+      "width": 1080
+    },
+    "timezone": "Asia/Kolkata",
+    "traits": {
+      "anonymousId": "4eb23185-ce4c-4358-a876-008d244effbb",
+      "Key-1": "value-1",
+      "id": "some_user_id with traits",
+      "userId": "some_user_id with traits",
+      "email": "test@example.com"
+    },
+    "userAgent": "Dalvik/2.1.0 (Linux; U; Android 12; sdk_gphone64_arm64 Build/SE1A.220203.002.A1)"
+  },
+  "event": "identify",
+  "integrations": {
+    "All": true
+  },
+  "messageId": "6cd35723-a9fa-48ac-b848-57b6385686a3",
+  "originalTimestamp": "2023-11-09T15:54:07.959Z",
+  "type": "identify",
+  "userId": "some_user_id"
+}
